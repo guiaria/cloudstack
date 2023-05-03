@@ -3111,5 +3111,6 @@
 "state.stopping": "Stopping",
 "state.suspended": "Suspended",
 "user.login": "Login",
-"user.logout": "Logout"
+"user.logout": "Logout",
+"label.gpuMgn": "GPU Management"
 }

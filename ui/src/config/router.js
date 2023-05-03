@@ -39,6 +39,7 @@ import config from '@/config/section/config'
 import tools from '@/config/section/tools'
 import quota from '@/config/section/plugin/quota'
 import cloudian from '@/config/section/plugin/cloudian'
+import gpu from '@/config/section/gpu'
 
 function generateRouterMap (section) {
   var map = {
@@ -240,7 +241,7 @@ export function asyncRouterMap () {
       generateRouterMap(tools),
       generateRouterMap(quota),
       generateRouterMap(cloudian),
-
+      generateRouterMap(gpu),
       {
         path: '/exception',
         name: 'exception',
