@@ -40,13 +40,13 @@
         <a-col :md="24" :lg="12" :gutter="12">
           <a-card>
             <template #title>
-              {{ $t('label.desc.db.stats') }}
+              {{ $t('label.gpuResource') }}
             </template>
             <a-table
               class="metric-card"
               :columns="columns"
               :loading="loading"
-              :data-source="dbMetrics"
+              :data-source="gpuMetrics"
               :pagination="false"
               size="middle"
               :rowClassName="getRowClassName"
@@ -77,16 +77,20 @@ export default {
   },
   data () {
     return {
-      dbMetrics: [],
+      gpuMetrics: [],
       columns: [
         {
-          title: this.$t('label.name'),
+          title: this.$t('label.gpu'),
           dataIndex: 'name',
           width: '30%'
         },
         {
-          title: this.$t('label.value'),
+          title: this.$t('label.gpuUUID'),
           dataIndex: 'value'
+        },
+        {
+          title: this.$t('label.resouce.owner'),
+          dataIndex: 'owner'
         }
       ]
     }
@@ -97,22 +101,29 @@ export default {
   watch: {
   },
   methods: {
-    fetchDbMetrics () {
+    fetchMetrics () {
       var metrics = [
         {
-          name: 'uptime in seconds',
-          value: 2960452
+          name: 'Dummy GPU',
+          value: 2738917389127422,
+          owner: 'Admin'
         },
         {
-          name: 'tlsversions',
-          value: 'TLSv1.2,TLSv1.3'
+          name: 'Dummy GPU2',
+          value: 1273891723891723,
+          owner: 'User1'
+        },
+        {
+          name: 'Dummy GPU3',
+          value: 1240172498791244,
+          owner: 'Admin'
         }
       ]
 
       return metrics
     },
     fetchDetails () {
-      this.dbMetrics = this.fetchDbMetrics()
+      this.gpuMetrics = this.fetchMetrics()
     },
     getRowClassName (record, index) {
       if (index % 2 === 0) {

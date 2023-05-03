@@ -3112,5 +3112,8 @@
 "state.suspended": "Suspended",
 "user.login": "Login",
 "user.logout": "Logout",
-"label.gpuMgn": "GPU Management"
+"label.gpuMgn": "GPU Management",
+"label.gpuResource": "GPU Resource",
+"label.gpuUUID": "UUID",
+"label.resouce.owner": "Resource Owner"
 }
