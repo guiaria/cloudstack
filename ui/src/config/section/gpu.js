@@ -15,13 +15,23 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import { shallowRef, defineAsyncComponent } from 'vue'
+// import { shallowRef, defineAsyncComponent } from 'vue'
 // import store from '@/store'
 
 export default {
-  name: 'Resource Management',
+  name: 'GPUManagement',
   title: 'label.gpuMgn',
   icon: 'project-outlined',
-  resourceType: 'Rmgn',
-  component: shallowRef(defineAsyncComponent(() => import('@/components/view/ResourceManagement.vue')))
+  resourceType: 'GPUmgn',
+  columns: ['name', 'uuid', 'owners'],
+  actions: [
+    {
+      api: 'deployVirtualMachine',
+      icon: 'plus-outlined',
+      label: 'label.vm.add',
+      docHelp: 'adminguide/virtual_machines.html#creating-vms',
+      listView: true,
+      component: () => import('@/views/compute/DeployVM.vue')
+    }
+  ]
 }

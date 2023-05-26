@@ -459,6 +459,7 @@ import OsLogo from '@/components/widgets/OsLogo'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import BulkActionProgress from '@/components/view/BulkActionProgress'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
+import { mockingData } from '@/constant/mockingData'
 
 export default {
   name: 'Resource',
@@ -727,6 +728,10 @@ export default {
       })
     },
     fetchData (params = {}) {
+      if (this.$route.name === 'GPUManagement') {
+        this.handleGPUCase(mockingData)
+        return
+      }
       if (this.$route.name === 'deployVirtualMachine') {
         return
       }
@@ -814,6 +819,10 @@ export default {
       }
 
       if (this.apiName === '' || this.apiName === undefined) {
+        if (this.$route.path.includes('GPUManagement')) {
+          this.handleGPUparam(mockingData)
+          return
+        }
         return
       }
 
@@ -1825,6 +1834,47 @@ export default {
       if (screenWidth <= 768) {
         this.modalWidth = '450px'
       }
+    },
+    handleGPUCase (resource) {
+      this.resource = resource
+      this.items = resource
+      this.columnKeys = this.$route.meta.columns
+      this.itemCount = this.resource.length
+
+      if (this.$route.meta.actions) {
+        this.actions = this.$route.meta.actions
+      }
+
+      for (var columnKey of this.columnKeys) {
+        let key = columnKey
+        let title = columnKey === 'cidr' && this.columnKeys.includes('ip6cidr') ? 'ipv4.cidr' : columnKey
+        if (typeof columnKey === 'object') {
+          if ('customTitle' in columnKey && 'field' in columnKey) {
+            key = columnKey.field
+            title = columnKey.customTitle
+          } else {
+            key = Object.keys(columnKey)[0]
+            title = Object.keys(columnKey)[0]
+          }
+        }
+        this.columns.push({
+          key: key,
+          title: this.$t('label.' + String(title).toLowerCase()),
+          dataIndex: key,
+          sorter: function (a, b) { return genericCompare(a[key] || '', b[key] || '') }
+        })
+        this.selectedColumns.push(key)
+      }
+      this.dataView = false
+
+      // this.$emit('change-resource', this.resource)
+    },
+    handleGPUparam (resource) {
+      console.warn('GPU')
+      const idx = resource.findIndex(x => x.name === this.$route.params.id)
+      const data = resource[idx]
+      this.resource = data
+      this.$emit('change-resource', this.resource)
     }
   }
 }
