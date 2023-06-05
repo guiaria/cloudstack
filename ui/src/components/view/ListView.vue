@@ -512,7 +512,7 @@ export default {
         '/project', '/account',
         '/zone', '/pod', '/cluster', '/host', '/storagepool', '/imagestore', '/systemvm', '/router', '/ilbvm', '/annotation',
         '/computeoffering', '/systemoffering', '/diskoffering', '/backupoffering', '/networkoffering', '/vpcoffering',
-        '/tungstenfabric'].join('|'))
+        '/tungstenfabric', '/GPUManagement'].join('|'))
         .test(this.$route.path)
     },
     enableGroupAction () {
