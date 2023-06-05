@@ -1871,7 +1871,7 @@ export default {
     },
     handleGPUparam (resource) {
       console.warn('GPU')
-      const idx = resource.findIndex(x => x.name === this.$route.params.id)
+      const idx = resource.findIndex(x => x.id === this.$route.params.id)
       const data = resource[idx]
       this.resource = data
       this.$emit('change-resource', this.resource)

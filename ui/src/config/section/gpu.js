@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// import { shallowRef, defineAsyncComponent } from 'vue'
+import { shallowRef, defineAsyncComponent } from 'vue'
 // import store from '@/store'
 
 export default {
@@ -23,7 +23,7 @@ export default {
   title: 'label.gpuMgn',
   icon: 'project-outlined',
   resourceType: 'GPUmgn',
-  columns: ['name', 'uuid', 'owners'],
+  columns: ['name', 'displayname', 'state', 'ipaddress', 'account', 'hostname'],
   actions: [
     {
       api: 'deployVirtualMachine',
@@ -32,6 +32,55 @@ export default {
       docHelp: 'adminguide/virtual_machines.html#creating-vms',
       listView: true,
       component: () => import('@/views/compute/DeployVM.vue')
+    },
+    {
+      api: 'updateVirtualMachine',
+      icon: 'edit-outlined',
+      label: 'label.action.edit.instance',
+      docHelp: 'adminguide/virtual_machines.html#changing-the-vm-name-os-or-group',
+      dataView: true,
+      popup: true,
+      component: shallowRef(defineAsyncComponent(() => import('@/views/compute/EditVM.vue')))
+    },
+    {
+      api: 'startVirtualMachine',
+      icon: 'caret-right-outlined',
+      label: 'label.action.start.instance',
+      message: 'message.action.start.instance',
+      docHelp: 'adminguide/virtual_machines.html#stopping-and-starting-vms',
+      dataView: true,
+      groupAction: true,
+      popup: true,
+      groupMap: (selection, values) => { return selection.map(x => { return { id: x, considerlasthost: values.considerlasthost } }) },
+      args: ['considerlasthost'],
+      show: (record) => { return ['Stopped'].includes(record.state) },
+      component: shallowRef(defineAsyncComponent(() => import('@/views/compute/StartVirtualMachine.vue')))
+    },
+    {
+      api: 'expungeVirtualMachine',
+      icon: 'delete-outlined',
+      label: 'label.action.expunge.instance',
+      message: (record) => { return record.backupofferingid ? 'message.action.expunge.instance.with.backups' : 'message.action.expunge.instance' },
+      docHelp: 'adminguide/virtual_machines.html#deleting-vms',
+      dataView: true,
+      show: (record, store) => { return ['Destroyed', 'Expunging'].includes(record.state) && store.features.allowuserexpungerecovervm }
+    },
+    {
+      api: 'destroyVirtualMachine',
+      icon: 'delete-outlined',
+      label: 'label.action.destroy.instance',
+      message: 'message.action.destroy.instance',
+      docHelp: 'adminguide/virtual_machines.html#deleting-vms',
+      dataView: true,
+      groupAction: true,
+      args: (record, store, group) => {
+        return (['Admin'].includes(store.userInfo.roletype) || store.features.allowuserexpungerecovervm)
+          ? ['expunge'] : []
+      },
+      popup: true,
+      groupMap: (selection, values) => { return selection.map(x => { return { id: x, expunge: values.expunge } }) },
+      show: (record) => { return ['Running', 'Stopped', 'Error'].includes(record.state) },
+      component: shallowRef(defineAsyncComponent(() => import('@/views/compute/DestroyVM.vue')))
     }
   ]
 }
