@@ -357,7 +357,7 @@ export const mockingData =
       domain: 'ROOT',
       created: '2023-04-11T09:11:59+0000',
       lastupdated: '2023-04-11T09:12:04+0000',
-      state: 'Running',
+      state: 'Stopped',
       haenable: false,
       zoneid: 'c843ba49-21c3-4616-a3ff-07bb91db3a6b',
       zonename: 'Sim-Adv Zone',

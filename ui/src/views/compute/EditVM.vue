@@ -91,6 +91,13 @@
         <a-textarea v-model:value="form.userdata">
         </a-textarea>
       </a-form-item>
+      <a-form-item v-if="isGpuMangement">
+        <template #label>
+          <tooltip-label :title="$t('label.extra.config')"/>
+        </template>
+        <a-textarea v-model:value="form.extraConfig">
+        </a-textarea>
+      </a-form-item>
       <a-form-item ref="securitygroupids" name="securitygroupids" :label="$t('label.security.groups')" v-if="securityGroupsEnabled">
         <a-select
           mode="multiple"
@@ -146,6 +153,7 @@ export default {
       template: {},
       securityGroupsEnabled: false,
       dynamicScalingVmConfig: false,
+      isGpuMangement: false,
       loading: false,
       securitygroups: {
         loading: false,
@@ -181,6 +189,10 @@ export default {
         userdata: ''
       })
       this.rules = reactive({})
+
+      if (this.$route.path.startsWith('/GPUManagement')) {
+        this.isGpuMangement = true
+      }
     },
     fetchData () {
       this.fetchZoneDetails()

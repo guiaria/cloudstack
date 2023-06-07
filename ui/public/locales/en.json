@@ -3115,5 +3115,6 @@
 "label.gpuMgn": "GPU Management",
 "label.gpuResource": "GPU Resource",
 "label.gpuUUID": "UUID",
-"label.resouce.owner": "Resource Owner"
+"label.resouce.owner": "Resource Owner",
+"label.extra.config" : "Extra Config"
 }

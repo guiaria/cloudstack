@@ -24,6 +24,9 @@ export default {
   icon: 'project-outlined',
   resourceType: 'GPUmgn',
   columns: ['name', 'displayname', 'state', 'ipaddress', 'account', 'hostname'],
+  details: ['displayname', 'name', 'id', 'state', 'ipaddress', 'ip6address', 'templatename', 'ostypename',
+    'serviceofferingname', 'isdynamicallyscalable', 'haenable', 'hypervisor', 'boottype', 'bootmode', 'account',
+    'domain', 'zonename', 'userdataid', 'userdataname', 'userdataparams', 'userdatadetails', 'userdatapolicy', 'hostcontrolstate'],
   actions: [
     {
       api: 'deployVirtualMachine',
